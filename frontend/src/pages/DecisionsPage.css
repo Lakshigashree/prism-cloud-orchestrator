@@ -1,0 +1,9 @@
+.decisions-page {
+  padding: 1rem 0;
+}
+
+.decisions-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
