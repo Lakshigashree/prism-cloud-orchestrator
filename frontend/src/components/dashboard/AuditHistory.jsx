@@ -8,6 +8,7 @@ import './AuditHistory.css';
 const AuditHistory = () => {
   const { data, loading, error } = useApi(api.getAuditHistory);
   const [entries, setEntries] = useState([]);
+  console.log('AuditHistory data:', data);
 
   useEffect(() => {
     if (data?.entries) {

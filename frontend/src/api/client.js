@@ -34,7 +34,7 @@ apiClient.interceptors.response.use(
 export const api = {
   // Monitoring
   getLiveMetrics: () => apiClient.get('/monitoring/live'),
-  getTraffic: () => apiClient.get('/traffic'),
+  getTraffic: () => apiClient.get('/monitoring/traffic'),
   
   // Carbon
   getCarbonData: () => apiClient.get('/carbon'),
