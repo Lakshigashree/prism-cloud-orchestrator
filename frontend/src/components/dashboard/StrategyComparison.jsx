@@ -31,12 +31,15 @@ const StrategyComparison = () => {
   if (error) return <div className="compare-error">Failed to load strategies</div>;
   if (!data) return <div className="compare-empty">No strategy data available</div>;
 
+  // Extract data from API response
+  const strategiesData = data.data || data;
+
   const chartData = {
-    labels: data.names || ['Baseline', 'Cost-First', 'Weighted'],
+    labels: strategiesData.names || ['Baseline', 'Cost-First', 'Weighted'],
     datasets: [
       {
         label: view === 'cost' ? 'Cost ($)' : view === 'carbon' ? 'Carbon (tCO₂)' : 'Latency (ms)',
-        data: data[view] || [0, 0, 0],
+        data: strategiesData[view] || [0, 0, 0],
         backgroundColor: [
           'rgba(96, 165, 250, 0.8)',
           'rgba(52, 211, 153, 0.8)',

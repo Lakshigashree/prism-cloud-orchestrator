@@ -10,11 +10,14 @@ const StatsBar = () => {
   if (loading) return <LoadingSpinner size="small" />;
   if (error || !data) return null;
 
+  // Extract data from API response
+  const statsData = data.data || data;
+
   const stats = [
-    { label: 'Total Decisions', value: data.total_decisions || 0 },
-    { label: 'Cost Saved', value: `$${data.cost_saved?.toFixed(2) || '0'}` },
-    { label: 'Carbon Saved', value: `${data.carbon_saved?.toFixed(2) || '0'} tCO₂` },
-    { label: 'Avg Latency', value: `${data.avg_latency?.toFixed(0) || '0'} ms` },
+    { label: 'Total Decisions', value: statsData.total_decisions || 0 },
+    { label: 'Cost Saved', value: `$${statsData.total_cost_saved?.toFixed(2) || '0'}` },
+    { label: 'Carbon Saved', value: `${statsData.total_carbon_saved?.toFixed(2) || '0'} tCO₂` },
+    { label: 'Avg Latency', value: `${statsData.average_latency?.toFixed(0) || '0'} ms` },
   ];
 
   return (

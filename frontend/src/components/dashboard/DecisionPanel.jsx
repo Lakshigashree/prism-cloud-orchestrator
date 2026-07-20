@@ -26,9 +26,14 @@ const DecisionPanel = () => {
       scale_up: 'var(--color-green)',
       scale_down: 'var(--color-red)',
       maintain: 'var(--color-yellow)',
+      migrate: 'var(--color-blue)',
+      defer: 'var(--color-purple)',
     };
     return map[type] || 'var(--color-blue)';
   };
+
+  // Extract decision data from API response
+  const decision = data?.data || data;
 
   if (loading) return <LoadingSpinner />;
   if (error) return <div className="panel-error">Failed to load decision</div>;
@@ -51,36 +56,36 @@ const DecisionPanel = () => {
         </div>
       </div>
 
-      {data && (
+      {decision && (
         <div className="decision-content">
           <div className="decision-main">
             <div 
               className="decision-action"
-              style={{ borderColor: getDecisionColor(data.action) }}
+              style={{ borderColor: getDecisionColor(decision.action_type) }}
             >
               <span className="action-label">Recommended Action</span>
-              <span className="action-value">{data.action?.toUpperCase() || 'Maintain'}</span>
+              <span className="action-value">{decision.action?.toUpperCase() || 'Maintain'}</span>
             </div>
             
             <div className="decision-metrics">
               <div className="metric-item">
                 <span className="metric-label">Cost Impact</span>
-                <span className="metric-value">${data.impact?.cost?.toFixed(2) || '—'}</span>
+                <span className="metric-value">${decision.impact?.cost?.toFixed(2) || '—'}</span>
               </div>
               <div className="metric-item">
                 <span className="metric-label">Carbon Impact</span>
-                <span className="metric-value">{data.impact?.carbon?.toFixed(2) || '—'} tCO₂</span>
+                <span className="metric-value">{decision.impact?.carbon?.toFixed(2) || '—'} tCO₂</span>
               </div>
               <div className="metric-item">
                 <span className="metric-label">Latency Impact</span>
-                <span className="metric-value">{data.impact?.latency?.toFixed(0) || '—'} ms</span>
+                <span className="metric-value">{decision.impact?.latency?.toFixed(0) || '—'} ms</span>
               </div>
             </div>
           </div>
 
           <div className="decision-explanation">
             <h4>Explanation</h4>
-            <p>{data.explanation || 'No explanation available'}</p>
+            <p>{decision.explanation || 'No explanation available'}</p>
           </div>
 
           <div className="decision-weights">
@@ -91,30 +96,30 @@ const DecisionPanel = () => {
                 <div className="weight-bar">
                   <div 
                     className="weight-fill" 
-                    style={{ width: `${(data.weights?.cost || 0.33) * 100}%`, background: '#34d399' }}
+                    style={{ width: `${(decision.weights?.cost || 0.33) * 100}%`, background: '#34d399' }}
                   />
                 </div>
-                <span className="weight-value">{((data.weights?.cost || 0.33) * 100).toFixed(0)}%</span>
+                <span className="weight-value">{((decision.weights?.cost || 0.33) * 100).toFixed(0)}%</span>
               </div>
               <div className="weight-item">
                 <span>Carbon</span>
                 <div className="weight-bar">
                   <div 
                     className="weight-fill" 
-                    style={{ width: `${(data.weights?.carbon || 0.33) * 100}%`, background: '#60a5fa' }}
+                    style={{ width: `${(decision.weights?.carbon || 0.33) * 100}%`, background: '#60a5fa' }}
                   />
                 </div>
-                <span className="weight-value">{((data.weights?.carbon || 0.33) * 100).toFixed(0)}%</span>
+                <span className="weight-value">{((decision.weights?.carbon || 0.33) * 100).toFixed(0)}%</span>
               </div>
               <div className="weight-item">
                 <span>Latency</span>
                 <div className="weight-bar">
                   <div 
                     className="weight-fill" 
-                    style={{ width: `${(data.weights?.latency || 0.34) * 100}%`, background: '#a78bfa' }}
+                    style={{ width: `${(decision.weights?.latency || 0.34) * 100}%`, background: '#a78bfa' }}
                   />
                 </div>
-                <span className="weight-value">{((data.weights?.latency || 0.34) * 100).toFixed(0)}%</span>
+                <span className="weight-value">{((decision.weights?.latency || 0.34) * 100).toFixed(0)}%</span>
               </div>
             </div>
           </div>

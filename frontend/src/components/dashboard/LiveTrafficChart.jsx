@@ -33,10 +33,12 @@ const LiveTrafficChart = () => {
 
   useEffect(() => {
     if (data) {
-      const labels = data.timestamps || [];
-      const cpuData = data.cpu || [];
-      const requestsData = data.requests || [];
-      const latencyData = data.latency || [];
+      // Extract data from API response
+      const trafficData = data.data || data;
+      const labels = trafficData.timestamps || [];
+      const cpuData = trafficData.cpu || [];
+      const requestsData = trafficData.requests || [];
+      const latencyData = trafficData.latency || [];
 
       setChartData({
         labels,
@@ -48,6 +50,7 @@ const LiveTrafficChart = () => {
             backgroundColor: 'rgba(96, 165, 250, 0.1)',
             fill: true,
             tension: 0.4,
+            pointRadius: 2,
           },
           {
             label: 'Requests/s',
@@ -56,6 +59,7 @@ const LiveTrafficChart = () => {
             backgroundColor: 'rgba(167, 139, 250, 0.1)',
             fill: true,
             tension: 0.4,
+            pointRadius: 2,
           },
           {
             label: 'Latency (ms)',
@@ -64,6 +68,7 @@ const LiveTrafficChart = () => {
             backgroundColor: 'rgba(244, 114, 182, 0.1)',
             fill: true,
             tension: 0.4,
+            pointRadius: 2,
           },
         ],
       });
@@ -98,6 +103,7 @@ const LiveTrafficChart = () => {
         },
         ticks: {
           color: 'rgba(148, 163, 184, 0.6)',
+          maxTicksLimit: 15,
         },
       },
       y: {
