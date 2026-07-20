@@ -25,6 +25,7 @@ const DecisionsPage = () => {
     }
   }, [strategiesData]);
 
+
   if (decisionError || strategiesError) {
     return (
       <motion.div 
@@ -66,5 +67,6 @@ const DecisionsPage = () => {
     </motion.div>
   );
 };
+
 
 export default DecisionsPage;
